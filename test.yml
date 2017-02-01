@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   version: "2017-01-22T01:56:00Z"
-  title: "BBB"
+  title: "squant.io"
 host: "8dnkxv5wxh.execute-api.us-east-1.amazonaws.com"
 basePath: "/test"
 schemes:
@@ -34,11 +34,21 @@ paths:
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: "'*'"
             responseTemplates:
-              application/json: "[\n  {\n    \"id\": \"45bc5fb2-5cd2-4055-a1b2-1f09549af849\"\
-                ,\n    \"date\": \"2016-12-15\",\n    \"url\": \"/$input.params('group')/trip/2016/12/15/45bc5fb2-5cd2-4055-a1b2-1f09549af849\"\
-                ,\n    \"totalWon\": \"$23.50\"\n  },\n  {\n    \"id\": \"a311e158-51d8-4b20-8b06-cccf4eb80eea\"\
-                ,\n    \"date\": \"2017-01-10\",\n    \"url\": \"/$input.params('group')/trip/2017/01/10/a311e158-51d8-4b20-8b06-cccf4eb80eea\"\
-                ,\n    \"totalWon\": \"$45.00\"\n  }\n]"
+              application/json: |
+                [
+                  {
+                    "id": "45bc5fb2-5cd2-4055-a1b2-1f09549af849",
+                    "date": "2016-12-15",
+                    "url": "/$input.params('group')/trip/2016/12/15/45bc5fb2-5cd2-4055-a1b2-1f09549af849",
+                    "totalWon": "$23.50"
+                  },
+                  {
+                    "id": "a311e158-51d8-4b20-8b06-cccf4eb80eea",
+                    "date": "2017-01-10",
+                    "url": "/$input.params('group')/trip/2017/01/10/a311e158-51d8-4b20-8b06-cccf4eb80eea",
+                    "totalWon": "$45.00"
+                  }
+                ]
         requestTemplates:
           application/json: "{\n  \"statusCode\": 200\n}"
         passthroughBehavior: "when_no_templates"
@@ -102,13 +112,28 @@ paths:
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: "'*'"
             responseTemplates:
-              application/json: "{\n  \"id\": \"$input.params('tripId')\",\n  \"totalAmount\"\
-                : \"$37.50\",\n  \"boys\": [\n    {\n      \"id\": \"id1\",\n    \
-                \  \"name\": \"Keely\",\n      \"winnings\": \"$0.50\"\n    },\n \
-                \   {\n      \"id\": \"id2\",\n      \"name\": \"Eric\",\n      \"\
-                winnings\": \"$30.00\"\n    },\n    {\n      \"id\": \"id3\",\n  \
-                \    \"name\": \"Jake\",\n      \"winnings\": \"$7.00\"\n    }\n \
-                \ ]\n}"
+              application/json: |
+                {
+                  "id": "$input.params('tripId')",
+                  "totalAmount": "$37.50",
+                  "boys": [
+                    {
+                      "id": "id1",
+                      "name": "Keely",
+                      "winnings": "$0.50"
+                    },
+                    {
+                      "id": "id2",
+                      "name": "Eric",
+                      "winnings": "$30.00"
+                    },
+                    {
+                      "id": "id3",
+                      "name": "Jake",
+                      "winnings": "$7.00"
+                    }
+                  ]
+                }
         requestTemplates:
           application/json: "{\"statusCode\": 200}"
         passthroughBehavior: "when_no_match"
