@@ -1,0 +1,192 @@
+---
+swagger: "2.0"
+info:
+  version: "2017-01-22T01:56:00Z"
+  title: "BBB"
+host: "8dnkxv5wxh.execute-api.us-east-1.amazonaws.com"
+basePath: "/test"
+schemes:
+- "https"
+paths:
+  /{group}/trip:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "group"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Trips"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          200:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            responseTemplates:
+              application/json: "[\n  {\n    \"id\": \"45bc5fb2-5cd2-4055-a1b2-1f09549af849\"\
+                ,\n    \"date\": \"2016-12-15\",\n    \"url\": \"/$input.params('group')/trip/2016/12/15/45bc5fb2-5cd2-4055-a1b2-1f09549af849\"\
+                ,\n    \"totalWon\": \"$23.50\"\n  },\n  {\n    \"id\": \"a311e158-51d8-4b20-8b06-cccf4eb80eea\"\
+                ,\n    \"date\": \"2017-01-10\",\n    \"url\": \"/$input.params('group')/trip/2017/01/10/a311e158-51d8-4b20-8b06-cccf4eb80eea\"\
+                ,\n    \"totalWon\": \"$45.00\"\n  }\n]"
+        requestTemplates:
+          application/json: "{\n  \"statusCode\": 200\n}"
+        passthroughBehavior: "when_no_templates"
+        type: "mock"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+  /{group}/trip/{tripId}:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "tripId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "group"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Trip"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            responseTemplates:
+              application/json: "{\n  \"id\": \"$input.params('tripId')\",\n  \"totalAmount\"\
+                : \"$37.50\",\n  \"boys\": [\n    {\n      \"id\": \"id1\",\n    \
+                \  \"name\": \"Keely\",\n      \"winnings\": \"$0.50\"\n    },\n \
+                \   {\n      \"id\": \"id2\",\n      \"name\": \"Eric\",\n      \"\
+                winnings\": \"$30.00\"\n    },\n    {\n      \"id\": \"id3\",\n  \
+                \    \"name\": \"Jake\",\n      \"winnings\": \"$7.00\"\n    }\n \
+                \ ]\n}"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+definitions:
+  Empty:
+    type: "object"
+    title: "Empty Schema"
+  Trip:
+    type: "object"
+    required:
+    - "boys"
+    - "id"
+    - "totalAmount"
+    properties:
+      id:
+        type: "string"
+      totalAmount:
+        type: "string"
+      boys:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            id:
+              type: "string"
+            name:
+              type: "string"
+            winnings:
+              type: "string"
+          required:
+          - "id"
+          - "name"
+          - "winnings"
+  Trips:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        date:
+          type: "string"
+        url:
+          type: "string"
+        totalWon:
+          type: "string"
+      required:
+      - "date"
+      - "id"
+      - "totalWon"
+      - "url"
