@@ -167,10 +167,177 @@ paths:
           application/json: "{\"statusCode\": 200}"
         passthroughBehavior: "when_no_match"
         type: "mock"
+  /{group}/bet:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "group"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Bets"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          200:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            responseTemplates:
+              application/json: |
+                [
+                  {
+                    "id": "45bc5fb2-5cd2-4055-a1b2-1f09549af849",
+                    "date": "2016-12-15",
+                    "url": "/$input.params('group')/trip/2016/12/15/45bc5fb2-5cd2-4055-a1b2-1f09549af849",
+                    "totalWon": "$23.50"
+                  },
+                  {
+                    "id": "a311e158-51d8-4b20-8b06-cccf4eb80eea",
+                    "date": "2017-01-10",
+                    "url": "/$input.params('group')/trip/2017/01/10/a311e158-51d8-4b20-8b06-cccf4eb80eea",
+                    "totalWon": "$45.00"
+                  }
+                ]
+        requestTemplates:
+          application/json: "{\n  \"statusCode\": 200\n}"
+        passthroughBehavior: "when_no_templates"
+        type: "mock"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+  /{group}/bet/{betId}:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "betId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "group"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Bet"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            responseTemplates:
+              application/json: |
+                {
+                  "id": "$input.params('betId')",
+                  "name": "Playoffs??",
+                  "description": "Will the Sixers make the playoffs?"
+                  "stakes": "Beer of quality",
+                  "status": "Proposed",
+                  "boys": [
+                    {
+                      "id": "id1",
+                      "name": "Keely",
+                      "side": "yes"
+                    },
+                    {
+                      "id": "id2",
+                      "name": "Jake",
+                      "side": "no"
+                    }
+                  ]
+                }
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
 definitions:
   Empty:
     type: "object"
     title: "Empty Schema"
+  User:
+    type: "object"
+    required:
+      - "id"
+      - "name"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
   Trip:
     type: "object"
     required:
@@ -215,3 +382,37 @@ definitions:
       - "id"
       - "totalWon"
       - "url"
+  Bet:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    - "proposition"
+    - "odds"
+    - "stakes"
+    - "proposedBy"
+    - "proposedTo"
+    - "status"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      proposition:
+        type: "string"
+      odds:
+        type: "string"
+      stakes:
+        type: "string"
+      proposedBy:
+        $ref: "#/definitions/User"
+      proposedTo:
+        $ref: "#/definitions/User"
+      status:
+        type: "string"
+      winner:
+        type: "string"
+  Bets:
+    type: "array"
+    items:
+      $ref: "#/definitions/Bet"
