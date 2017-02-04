@@ -196,16 +196,22 @@ paths:
               application/json: |
                 [
                   {
-                    "id": "45bc5fb2-5cd2-4055-a1b2-1f09549af849",
-                    "date": "2016-12-15",
-                    "url": "/$input.params('group')/trip/2016/12/15/45bc5fb2-5cd2-4055-a1b2-1f09549af849",
-                    "totalWon": "$23.50"
-                  },
-                  {
-                    "id": "a311e158-51d8-4b20-8b06-cccf4eb80eea",
-                    "date": "2017-01-10",
-                    "url": "/$input.params('group')/trip/2017/01/10/a311e158-51d8-4b20-8b06-cccf4eb80eea",
-                    "totalWon": "$45.00"
+                    "id": "1234",
+                    "name": "Playoffs??",
+                    "proposition": "The Sixers make the playoffs.",
+                    "odds": "1:1",
+                    "stakes": "Beer of quality",
+                    "status": "Proposed",
+                    "proposedBy": {
+                      "id": "id1",
+                      "name": "Keely",
+                      "side": "yes"
+                    },
+                    "proposedTo": {
+                      "id": "id2",
+                      "name": "Jake",
+                      "side": "no"
+                    }
                   }
                 ]
         requestTemplates:
@@ -273,23 +279,22 @@ paths:
             responseTemplates:
               application/json: |
                 {
-                  "id": "$input.params('betId')",
+                  "id": "1234",
                   "name": "Playoffs??",
-                  "description": "Will the Sixers make the playoffs?"
+                  "proposition": "The Sixers make the playoffs.",
+                  "odds": "1:1",
                   "stakes": "Beer of quality",
                   "status": "Proposed",
-                  "boys": [
-                    {
-                      "id": "id1",
-                      "name": "Keely",
-                      "side": "yes"
-                    },
-                    {
-                      "id": "id2",
-                      "name": "Jake",
-                      "side": "no"
-                    }
-                  ]
+                  "proposedBy": {
+                    "id": "id1",
+                    "name": "Keely",
+                    "side": "yes"
+                  },
+                  "proposedTo": {
+                    "id": "id2",
+                    "name": "Jake",
+                    "side": "no"
+                  }
                 }
         requestTemplates:
           application/json: "{\"statusCode\": 200}"
